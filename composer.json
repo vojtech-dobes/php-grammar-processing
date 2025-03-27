@@ -1,0 +1,46 @@
+{
+	"authors": [
+		{
+			"name": "Vojtěch Dobeš",
+			"homepage": "https://vojtechdobes.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Vojtechdobes\\GrammarProcessing\\": "src/GrammarProcessing"
+		}
+	},
+	"config": {
+		"sort-packages": true
+	},
+	"description": "Library for tokenization, abstract syntax tree parsing & interpretation",
+	"keywords": [
+		"ast",
+		"context-free",
+		"grammar",
+		"language",
+		"lexer",
+		"parser",
+		"syntax",
+		"token"
+	],
+	"license": [
+		"BSD-3-Clause",
+		"GPL-2.0-only",
+		"GPL-3.0-only"
+	],
+	"name": "vojtech-dobes/php-grammar-processing",
+	"require": {
+		"php": "~8.4",
+		"ext-pcre": "*"
+	},
+	"require-dev": {
+		"nette/tester": "~2.5.0",
+		"phpstan/phpstan": "~2.1.0",
+		"spaze/phpstan-disallowed-calls": "~4.4.0"
+	},
+	"scripts": {
+		"phpstan": "phpstan analyse",
+		"test": "composer dump-autoload && tester tests -o console-lines --cider --setup=tests/setup.php"
+	}
+}
