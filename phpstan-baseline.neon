@@ -1,0 +1,31 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#1 \$string of function strlen expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/GrammarProcessing/LexicalGrammar.php
+
+		-
+			message: '#^Parameter \#1 \$type of class Vojtechdobes\\GrammarProcessing\\Token constructor expects string, \(TSyntaxTokenSymbol of TSymbol of string\)\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/GrammarProcessing/LexicalGrammar.php
+
+		-
+			message: '#^Parameter \#1 \$value of method Vojtechdobes\\GrammarProcessing\\LexicalGrammar\<TSymbol of string\>\:\:throwUnexpectedTokenException\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/GrammarProcessing/LexicalGrammar.php
+
+		-
+			message: '#^Parameter \#2 \$value of class Vojtechdobes\\GrammarProcessing\\Token constructor expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/GrammarProcessing/LexicalGrammar.php
+
+		-
+			message: '#^Parameter \$column of class Vojtechdobes\\GrammarProcessing\\Location constructor expects int\<0, max\>, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/GrammarProcessing/LexicalGrammar.php
