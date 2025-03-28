@@ -25,9 +25,7 @@
 		"token"
 	],
 	"license": [
-		"BSD-3-Clause",
-		"GPL-2.0-only",
-		"GPL-3.0-only"
+		"BSD-3-Clause"
 	],
 	"name": "vojtech-dobes/php-grammar-processing",
 	"require": {
