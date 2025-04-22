@@ -1,5 +1,7 @@
 # 📓 Grammar Processing for PHP
 
+![Checks](https://github.com/vojtech-dobes/php-grammar-processing/actions/workflows/checks.yml/badge.svg?branch=master&event=push)
+
 This library provides convenient APIs for describing a context-free grammar, and subsequently using it to build an abstract syntax tree and analyze it for an arbitrary purpose.
 
 
