@@ -33,9 +33,9 @@
 		"ext-pcre": "*"
 	},
 	"require-dev": {
-		"nette/tester": "~2.5.0",
-		"phpstan/phpstan": "~2.1.0",
-		"spaze/phpstan-disallowed-calls": "~4.4.0"
+		"nette/tester": "^2.5.4",
+		"phpstan/phpstan": "^2.1.12",
+		"spaze/phpstan-disallowed-calls": "^4.5.0"
 	},
 	"scripts": {
 		"phpstan": "phpstan analyse",
