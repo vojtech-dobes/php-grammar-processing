@@ -18,11 +18,21 @@ final class SelectedNode implements Node
 
 	}
 
+	public mixed $value {
+
+		get {
+			return $this->subnode instanceof ListNode
+				? $this->subnode->value
+				: $this->subnode;
+		}
+
+	}
+
 
 
 	public function __construct(
 		public readonly int $index,
-		public readonly Node $value,
+		public readonly Node $subnode,
 	) {}
 
 }
