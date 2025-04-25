@@ -32,6 +32,10 @@ final class AbstractSyntaxTree implements Node
 			if ($currentGenerator->valid()) {
 				$subnode = $currentGenerator->current();
 
+				if ($subnode instanceof SelectedNode) {
+					$subnode = $subnode->value;
+				}
+
 				if ($subnode === NULL) {
 					$currentGenerator->send(NULL);
 				} elseif ($subnode instanceof Token) {
