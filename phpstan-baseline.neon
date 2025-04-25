@@ -28,4 +28,4 @@ parameters:
 			message: '#^Parameter \$column of class Vojtechdobes\\GrammarProcessing\\Location constructor expects int\<0, max\>, int given\.$#'
 			identifier: argument.type
 			count: 1
-			path: src/GrammarProcessing/LexicalGrammar.php
+			path: src/GrammarProcessing/LocationGetter.php

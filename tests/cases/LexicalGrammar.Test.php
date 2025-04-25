@@ -16,6 +16,13 @@ $case = Tester\Environment::loadData();
 	$expectedTokens,
 ] = $case;
 
+$locationGetter = new Vojtechdobes\GrammarProcessing\LocationGetter($source);
+
+function formatLocation(Vojtechdobes\GrammarProcessing\Location $location): string
+{
+	return "{$location->line},{$location->column}";
+}
+
 $lexicalGrammar = new Vojtechdobes\GrammarProcessing\LexicalGrammar(
 	ignoredTokenSymbols: $ignoredTokenSymbols,
 	syntaxTokenSymbols: $syntaxTokenSymbols,
@@ -31,7 +38,7 @@ try {
 			static fn ($token) => [
 				$token->type,
 				$token->value,
-				"{$token->location->line},{$token->location->column}",
+				formatLocation($locationGetter->getLocation($token->offset)),
 			],
 			$tokenStream->tokens,
 		),

@@ -16,6 +16,7 @@ final class TokenStream
 	 */
 	public function __construct(
 		public readonly array $tokens,
+		private readonly LocationGetter $locationGetter,
 	) {}
 
 
@@ -65,7 +66,7 @@ final class TokenStream
 		throw new CannotConsumeTokenException(
 			"Unexpected token '{$token->value}'",
 			$this->currentToken,
-			$token->location,
+			$this->locationGetter->getLocation($token->offset),
 		);
 	}
 
@@ -88,9 +89,9 @@ final class TokenStream
 
 		if ($token->type !== $type) {
 			throw new CannotConsumeTokenException(
-				"Expected token with type '{$type}', got '{$token->type}' instead",
+				"Expected token with type '{$type}', got '{$token->type}' ({$token->value}) instead",
 				$this->currentToken,
-				$token->location,
+				$this->locationGetter->getLocation($token->offset),
 			);
 		}
 
@@ -117,7 +118,7 @@ final class TokenStream
 			throw new CannotConsumeTokenException(
 				"Expected token '{$value}', got '{$token->value}' instead",
 				$this->currentToken,
-				$token->location,
+				$this->locationGetter->getLocation($token->offset),
 			);
 		}
 
