@@ -42,10 +42,6 @@ final class LexicalGrammar
 			throw new UnexpectedTokenException("Can't parse source: " . preg_last_error_msg(), null);
 		}
 
-		if ($matches === []) {
-			return new TokenStream([]);
-		}
-
 		$getLocation = function (int $offset) use ($source): Location {
 			$precedingText = substr($source, 0, $offset);
 
@@ -74,6 +70,10 @@ final class LexicalGrammar
 				substr($source, $expectedOffset),
 				$getLocation($expectedOffset),
 			);
+		}
+
+		if ($matches === []) {
+			return new TokenStream([]);
 		}
 
 		if ($this->ignoredTokenSymbols !== []) {
