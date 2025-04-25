@@ -33,4 +33,11 @@ final class NegativeLookahead implements Symbol
 		return new GrammarProcessing\EmptyNode('NegativeLookahead');
 	}
 
+
+
+	public function visit(callable $visitor): Symbol
+	{
+		return $visitor($this);
+	}
+
 }

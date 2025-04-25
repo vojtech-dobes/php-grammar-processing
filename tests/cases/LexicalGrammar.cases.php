@@ -90,6 +90,6 @@ return [
 			'Base' => new Vojtechdobes\GrammarProcessing\Vocabulary\Regexp('a'),
 		],
 		'ab',
-		"Unxpected token 'b' (line 1, col 2)",
+		"Unexpected token 'b' (line 1, col 2)",
 	],
 ];

@@ -9,7 +9,7 @@ final class Literal implements Symbol
 {
 
 	public function __construct(
-		private readonly string $literal,
+		public readonly string $literal,
 	) {}
 
 
@@ -35,6 +35,13 @@ final class Literal implements Symbol
 		}
 
 		return new GrammarProcessing\TokenNode($token);
+	}
+
+
+
+	public function visit(callable $visitor): Symbol
+	{
+		return $visitor($this);
 	}
 
 }

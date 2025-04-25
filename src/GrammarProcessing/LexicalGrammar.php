@@ -42,18 +42,7 @@ final class LexicalGrammar
 			throw new UnexpectedTokenException("Can't parse source: " . preg_last_error_msg(), null);
 		}
 
-		if ($matches === []) {
-			return new TokenStream([]);
-		}
-
-		$getLocation = function (int $offset) use ($source): Location {
-			$precedingText = substr($source, 0, $offset);
-
-			return new Location(
-				line: substr_count($precedingText, "\n") + 1,
-				column: $offset - strrpos("\n" . $precedingText, "\n") + 1,
-			);
-		};
+		$locationGetter = new LocationGetter($source);
 
 		$expectedOffset = 0;
 		$endOffset = strlen($source);
@@ -62,7 +51,7 @@ final class LexicalGrammar
 			if ($expectedOffset !== $match[0][1]) {
 				$this->throwUnexpectedTokenException(
 					$match[0][0],
-					$getLocation($match[0][1]),
+					$locationGetter->getLocation($match[0][1]),
 				);
 			}
 
@@ -72,8 +61,12 @@ final class LexicalGrammar
 		if ($expectedOffset !== strlen($source)) {
 			$this->throwUnexpectedTokenException(
 				substr($source, $expectedOffset),
-				$getLocation($expectedOffset),
+				$locationGetter->getLocation($expectedOffset),
 			);
+		}
+
+		if ($matches === []) {
+			return new TokenStream([], $locationGetter);
 		}
 
 		if ($this->ignoredTokenSymbols !== []) {
@@ -100,7 +93,7 @@ final class LexicalGrammar
 		}
 
 		if ($matches === []) {
-			return new TokenStream([]);
+			return new TokenStream([], $locationGetter);
 		}
 
 		$iMin = 1 + count($this->ignoredTokenSymbols);
@@ -108,7 +101,7 @@ final class LexicalGrammar
 
 		return new TokenStream(
 			array_map(
-				function (array $match) use ($getLocation, $iMax, $iMin): Token {
+				function (array $match) use ($iMax, $iMin): Token {
 					$type = NULL;
 
 					for ($i = $iMin; $i < $iMax; $i++) {
@@ -121,11 +114,11 @@ final class LexicalGrammar
 						$type,
 						$match[0][0],
 						$match[0][1],
-						$getLocation,
 					);
 				},
 				$matches,
 			),
+			$locationGetter,
 		);
 	}
 
@@ -154,7 +147,7 @@ final class LexicalGrammar
 	{
 		throw new UnexpectedTokenException(
 			sprintf(
-				"Unxpected token '%s'",
+				"Unexpected token '%s'",
 				strlen($value) > 12
 					? substr($value, 0, 10) . '... (truncated)'
 					: $value,

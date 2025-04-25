@@ -36,7 +36,8 @@ final class SyntacticGrammar
 			);
 
 			$tokenStream->consumeEndOfStream();
-		} catch (CannotConsumeTokenException) {
+		} catch (CannotConsumeTokenException $e) {
+			$error->setError($e);
 			$error->throw();
 		}
 

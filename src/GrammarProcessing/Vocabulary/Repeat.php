@@ -9,9 +9,9 @@ final class Repeat implements Symbol
 {
 
 	public function __construct(
-		private readonly Symbol $symbol,
-		private readonly int $min,
-		private readonly ?int $max,
+		public readonly Symbol $symbol,
+		public readonly int $min,
+		public readonly ?int $max,
 	) {}
 
 
@@ -67,6 +67,21 @@ final class Repeat implements Symbol
 		}
 
 		return new GrammarProcessing\ListNode($result);
+	}
+
+
+
+	public function visit(callable $visitor): Symbol
+	{
+		$visitedSymbol = $this->symbol->visit($visitor);
+
+		return $visitor(
+			$visitedSymbol === $this->symbol ? $this : new self(
+				$visitedSymbol,
+				$this->min,
+				$this->max,
+			),
+		);
 	}
 
 }

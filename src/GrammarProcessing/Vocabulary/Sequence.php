@@ -12,7 +12,7 @@ final class Sequence implements Symbol
 	 * @param list<Symbol> $symbols
 	 */
 	public function __construct(
-		private readonly array $symbols,
+		public readonly array $symbols,
 	) {}
 
 
@@ -40,6 +40,23 @@ final class Sequence implements Symbol
 		}
 
 		return new GrammarProcessing\ListNode($result);
+	}
+
+
+
+	public function visit(callable $visitor): Symbol
+	{
+		$visitedSymbols = [];
+
+		foreach ($this->symbols as $symbol) {
+			$visitedSymbols[] = $symbol->visit($visitor);
+		}
+
+		return $visitor(
+			$visitedSymbols === $this->symbols
+				? $this
+				: new self($visitedSymbols),
+		);
 	}
 
 }
