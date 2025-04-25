@@ -154,7 +154,7 @@ final class LexicalGrammar
 	{
 		throw new UnexpectedTokenException(
 			sprintf(
-				"Unxpected token '%s'",
+				"Unexpected token '%s'",
 				strlen($value) > 12
 					? substr($value, 0, 10) . '... (truncated)'
 					: $value,
