@@ -12,7 +12,7 @@ final class Sequence implements Symbol
 	 * @param list<Symbol> $symbols
 	 */
 	public function __construct(
-		private readonly array $symbols,
+		public readonly array $symbols,
 	) {}
 
 

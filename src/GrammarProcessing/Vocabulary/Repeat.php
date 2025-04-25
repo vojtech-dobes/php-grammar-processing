@@ -9,9 +9,9 @@ final class Repeat implements Symbol
 {
 
 	public function __construct(
-		private readonly Symbol $symbol,
-		private readonly int $min,
-		private readonly ?int $max,
+		public readonly Symbol $symbol,
+		public readonly int $min,
+		public readonly ?int $max,
 	) {}
 
 

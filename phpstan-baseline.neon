@@ -29,3 +29,15 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: src/GrammarProcessing/LocationGetter.php
+
+		-
+			message: '#^Parameter \#1 \$source of method Vojtechdobes\\GrammarProcessing\\Ebnf\\Parser\:\:parseGrammarFromSource\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/cases/Grammars/ebnfGrammar.Test.php
+
+		-
+			message: '#^Parameter \#1 \$source of method Vojtechdobes\\GrammarProcessing\\Grammar\:\:parseSource\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/cases/Grammars/ebnfGrammar.Test.php

@@ -9,7 +9,7 @@ final class Literal implements Symbol
 {
 
 	public function __construct(
-		private readonly string $literal,
+		public readonly string $literal,
 	) {}
 
 
