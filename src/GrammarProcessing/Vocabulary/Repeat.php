@@ -69,4 +69,19 @@ final class Repeat implements Symbol
 		return new GrammarProcessing\ListNode($result);
 	}
 
+
+
+	public function visit(callable $visitor): Symbol
+	{
+		$visitedSymbol = $this->symbol->visit($visitor);
+
+		return $visitor(
+			$visitedSymbol === $this->symbol ? $this : new self(
+				$visitedSymbol,
+				$this->min,
+				$this->max,
+			),
+		);
+	}
+
 }

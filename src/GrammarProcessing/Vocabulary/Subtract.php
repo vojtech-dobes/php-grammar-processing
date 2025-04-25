@@ -55,4 +55,21 @@ final class Subtract implements Symbol
 		return $node;
 	}
 
+
+
+	public function visit(callable $visitor): Symbol
+	{
+		$visitedBaseSymbol = $this->baseSymbol->visit($visitor);
+		$visitedSubtractedSymbol = $this->subtractedSymbol->visit($visitor);
+
+		$isDifferent = $visitedBaseSymbol !== $this->baseSymbol || $visitedSubtractedSymbol !== $this->subtractedSymbol;
+
+		return $visitor(
+			$isDifferent ? $this : new self(
+				$visitedBaseSymbol,
+				$visitedSubtractedSymbol,
+			),
+		);
+	}
+
 }

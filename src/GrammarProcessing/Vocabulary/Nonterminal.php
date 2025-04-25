@@ -32,4 +32,11 @@ final class Nonterminal implements Symbol
 			: new GrammarProcessing\TokenNode($tokenStream->consumeTokenWithType($this->nonterminal));
 	}
 
+
+
+	public function visit(callable $visitor): Symbol
+	{
+		return $visitor($this);
+	}
+
 }

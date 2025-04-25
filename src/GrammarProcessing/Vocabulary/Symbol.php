@@ -24,4 +24,11 @@ interface Symbol
 		array $nonterminals,
 	): GrammarProcessing\Node;
 
+
+
+	/**
+	 * @param callable(Symbol): Symbol $visitor
+	 */
+	function visit(callable $visitor): Symbol;
+
 }

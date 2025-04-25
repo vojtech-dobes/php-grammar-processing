@@ -67,4 +67,21 @@ final class OneOf implements Symbol
 		return $result['node'];
 	}
 
+
+
+	public function visit(callable $visitor): Symbol
+	{
+		$result = [];
+
+		foreach ($this->symbols as $symbol) {
+			$result[] = $symbol->visit($visitor);
+		}
+
+		return $visitor(
+			$result === $this->symbols
+				? $this
+				: new self($result),
+		);
+	}
+
 }

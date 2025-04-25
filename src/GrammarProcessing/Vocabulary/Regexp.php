@@ -37,4 +37,11 @@ final class Regexp implements Symbol
 		);
 	}
 
+
+
+	public function visit(callable $visitor): Symbol
+	{
+		return $visitor($this);
+	}
+
 }

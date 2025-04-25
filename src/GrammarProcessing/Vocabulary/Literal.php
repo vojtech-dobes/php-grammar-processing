@@ -37,4 +37,11 @@ final class Literal implements Symbol
 		return new GrammarProcessing\TokenNode($token);
 	}
 
+
+
+	public function visit(callable $visitor): Symbol
+	{
+		return $visitor($this);
+	}
+
 }
