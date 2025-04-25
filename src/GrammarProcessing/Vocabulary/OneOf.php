@@ -36,13 +36,14 @@ final class OneOf implements Symbol
 		$attempts = [];
 		$localError = new GrammarProcessing\Error();
 
-		foreach ($this->symbols as $symbol) {
+		foreach ($this->symbols as $i => $symbol) {
 			$tokenStreamCopy = clone $tokenStream;
 
 			try {
 				$node = $symbol->acceptNode($error, $tokenStreamCopy, $nonterminals);
 
 				$attempts[] = [
+					'index' => $i,
 					'node' => $node,
 					'tokenStream' => $tokenStreamCopy,
 				];
@@ -64,7 +65,11 @@ final class OneOf implements Symbol
 		$result = array_pop($attempts);
 
 		$tokenStream->advanceTo($result['tokenStream']);
-		return $result['node'];
+
+		return new GrammarProcessing\SelectedNode(
+			$result['index'],
+			$result['node'],
+		);
 	}
 
 
