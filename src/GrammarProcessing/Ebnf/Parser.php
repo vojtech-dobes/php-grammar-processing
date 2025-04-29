@@ -37,6 +37,10 @@ final class Parser
 
 
 
+	/**
+	 * @throws GrammarProcessing\CannotConsumeTokenException
+	 * @throws GrammarProcessing\UnexpectedTokenException
+	 */
 	public function parseGrammarFromSource(string $source): GrammarProcessing\Grammar
 	{
 		return $this->parseGrammarFromAbstractSyntaxTree(

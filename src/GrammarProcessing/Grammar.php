@@ -43,6 +43,9 @@ final class Grammar
 
 
 
+	/**
+	 * @throws UnexpectedTokenException
+	 */
 	public function tokenizeSource(string $source): TokenStream
 	{
 		return $this->lexicalGrammar->parseSource($source);
@@ -55,6 +58,7 @@ final class Grammar
 	 * @param TRootSymbol $rootSymbol
 	 * @return AbstractSyntaxTree<TRootSymbol>
 	 * @throws CannotConsumeTokenException
+	 * @throws UnexpectedTokenException
 	 */
 	public function parseSource(string $source, string $rootSymbol): AbstractSyntaxTree
 	{
