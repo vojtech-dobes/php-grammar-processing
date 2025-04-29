@@ -17,6 +17,7 @@ interface Symbol
 
 	/**
 	 * @param array<string, Symbol> $nonterminals
+	 * @throws GrammarProcessing\CannotConsumeTokenException
 	 */
 	function acceptNode(
 		GrammarProcessing\Error $error,

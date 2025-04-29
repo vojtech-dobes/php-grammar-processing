@@ -102,6 +102,9 @@ final class TokenStream
 
 
 
+	/**
+	 * @throws CannotConsumeTokenException
+	 */
 	public function consumeTokenWithValue(string $value): Token
 	{
 		if (isset($this->tokens[$this->currentToken]) === FALSE) {

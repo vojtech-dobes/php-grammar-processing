@@ -25,6 +25,12 @@ parameters:
 			path: src/GrammarProcessing/LexicalGrammar.php
 
 		-
+			message: '#^Only numeric types are allowed in \-, int\|false given on the right side\.$#'
+			identifier: minus.rightNonNumeric
+			count: 1
+			path: src/GrammarProcessing/LocationGetter.php
+
+		-
 			message: '#^Parameter \$column of class Vojtechdobes\\GrammarProcessing\\Location constructor expects int\<0, max\>, int given\.$#'
 			identifier: argument.type
 			count: 1
