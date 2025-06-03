@@ -15,19 +15,19 @@ final class Term implements GrammarProcessing\NodeInterpretation
 		/** @var GrammarProcessing\SelectedNode $node */
 
 		return match ($node->index) {
-			0 => yield $node->value[2],
+			0 => yield $node->getValue()[2],
 			1 => new GrammarProcessing\Vocabulary\Repeat(
-				yield $node->value[2],
+				yield $node->getValue()[2],
 				0,
 				1,
 			),
 			2 => new GrammarProcessing\Vocabulary\Repeat(
-				yield $node->value[2],
+				yield $node->getValue()[2],
 				0,
 				null,
 			),
-			3 => yield $node->value,
-			4 => yield $node->value,
+			3 => yield $node->getValue(),
+			4 => yield $node->getValue(),
 			default => throw new LogicException("This can't happen"),
 		};
 	}

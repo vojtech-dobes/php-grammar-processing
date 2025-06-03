@@ -11,7 +11,7 @@ final class Identifier implements GrammarProcessing\NodeInterpretation
 
 	public function interpret(GrammarProcessing\Node $node): Generator
 	{
-		return new GrammarProcessing\Vocabulary\Nonterminal(yield $node->value);
+		return new GrammarProcessing\Vocabulary\Nonterminal(yield $node->getValue());
 	}
 
 }

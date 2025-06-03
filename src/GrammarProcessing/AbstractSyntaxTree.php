@@ -19,6 +19,23 @@ final class AbstractSyntaxTree implements Node
 
 
 
+	/**
+	 * @return TName
+	 */
+	public function getName(): string
+	{
+		return $this->name;
+	}
+
+
+
+	public function getValue(): mixed
+	{
+		return $this->value;
+	}
+
+
+
 	public function interpret(Interpretation $interpretation): mixed
 	{
 		$nodeInterpretations = $interpretation->nodeInterpretations;
@@ -33,7 +50,7 @@ final class AbstractSyntaxTree implements Node
 				$subnode = $currentGenerator->current();
 
 				if ($subnode instanceof SelectedNode) {
-					$subnode = $subnode->value;
+					$subnode = $subnode->getValue();
 				}
 
 				if ($subnode === NULL) {
@@ -41,15 +58,15 @@ final class AbstractSyntaxTree implements Node
 				} elseif ($subnode instanceof Token) {
 					$currentGenerator->send($subnode->value);
 				} elseif ($subnode instanceof TokenNode) {
-					if (isset($nodeInterpretations[$subnode->name])) {
+					if (isset($nodeInterpretations[$subnode->getName()])) {
 						$generatorStack[] = $currentGenerator;
-						$currentGenerator = $nodeInterpretations[$subnode->name]->interpret($subnode);
+						$currentGenerator = $nodeInterpretations[$subnode->getName()]->interpret($subnode);
 					} else {
 						$currentGenerator->send($subnode->value->value);
 					}
 				} else {
 					$generatorStack[] = $currentGenerator;
-					$currentGenerator = $nodeInterpretations[$subnode->name]->interpret($subnode->value);
+					$currentGenerator = $nodeInterpretations[$subnode->getName()]->interpret($subnode->getValue());
 				}
 			} else {
 				$currentNodeValue = $currentGenerator->getReturn();

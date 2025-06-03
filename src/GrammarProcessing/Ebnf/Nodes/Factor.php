@@ -16,25 +16,25 @@ final class Factor implements GrammarProcessing\NodeInterpretation
 
 		return match ($node->index) {
 			0 => new GrammarProcessing\Vocabulary\Repeat(
-				yield $node->value[0],
+				yield $node->getValue()[0],
 				0,
 				1,
 			),
 			1 => new GrammarProcessing\Vocabulary\Repeat(
-				yield $node->value[0],
+				yield $node->getValue()[0],
 				0,
 				null,
 			),
 			2 => new GrammarProcessing\Vocabulary\Repeat(
-				yield $node->value[0],
+				yield $node->getValue()[0],
 				1,
 				null,
 			),
 			3 => new GrammarProcessing\Vocabulary\Subtract(
-				yield $node->value[0],
-				yield $node->value[4],
+				yield $node->getValue()[0],
+				yield $node->getValue()[4],
 			),
-			4 => yield $node->value[0],
+			4 => yield $node->getValue()[0],
 			default => throw new LogicException("This can't happen"),
 		};
 	}

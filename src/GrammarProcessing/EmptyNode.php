@@ -6,18 +6,22 @@ namespace Vojtechdobes\GrammarProcessing;
 final class EmptyNode implements Node
 {
 
-	public null $value {
+	public function __construct(
+		public readonly string $name,
+	) {}
 
-		get {
-			return null;
-		}
 
+
+	public function getName(): string
+	{
+		return $this->name;
 	}
 
 
 
-	public function __construct(
-		public readonly string $name,
-	) {}
+	public function getValue(): null
+	{
+		return null;
+	}
 
 }

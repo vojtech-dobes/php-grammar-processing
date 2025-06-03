@@ -6,7 +6,10 @@ namespace Vojtechdobes\GrammarProcessing;
 interface Node
 {
 
-	public string $name { get; }
-	public mixed $value { get; }
+	function getName(): string;
+
+
+
+	function getValue(): mixed;
 
 }

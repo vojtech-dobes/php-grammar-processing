@@ -30,8 +30,8 @@ final class Grammar implements GrammarProcessing\NodeInterpretation
 	{
 		$result = [];
 
-		foreach ($node->value as $item) {
-			[$identifier, $production] = yield $item->value[1];
+		foreach ($node->getValue() as $item) {
+			[$identifier, $production] = yield $item->getValue()[1];
 
 			$result[$identifier->nonterminal] = $production;
 		}

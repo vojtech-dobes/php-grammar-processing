@@ -11,7 +11,7 @@ final class Terminal implements GrammarProcessing\NodeInterpretation
 
 	public function interpret(GrammarProcessing\Node $node): Generator
 	{
-		$value = yield $node->value;
+		$value = yield $node->getValue();
 
 		if (str_starts_with($value, '"')) {
 			$value = trim($value, '"');

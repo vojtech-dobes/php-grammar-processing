@@ -6,18 +6,22 @@ namespace Vojtechdobes\GrammarProcessing;
 final class TokenNode implements Node
 {
 
-	public string $name {
+	public function __construct(
+		public readonly Token $value,
+	) {}
 
-		get {
-			return $this->value->type;
-		}
 
+
+	public function getName(): string
+	{
+		return $this->value->type;
 	}
 
 
 
-	public function __construct(
-		public readonly Token $value,
-	) {}
+	public function getValue(): Token
+	{
+		return $this->value;
+	}
 
 }

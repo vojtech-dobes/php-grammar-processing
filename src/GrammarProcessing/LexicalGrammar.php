@@ -129,7 +129,7 @@ final class LexicalGrammar
 		return '~' . implode('|', array_map(
 			fn ($lexicalSymbol) => sprintf(
 				'(%s)',
-				new Vocabulary\Nonterminal($lexicalSymbol)->getPattern($this->symbols),
+				(new Vocabulary\Nonterminal($lexicalSymbol))->getPattern($this->symbols),
 			),
 			[...$this->ignoredTokenSymbols, ...$this->syntaxTokenSymbols],
 		)) . '~u';

@@ -27,8 +27,8 @@ final class Parser
 		array $ignoredTokenSymbols,
 	)
 	{
-		$this->ebnfGrammar = new GrammarFactory()->createGrammar();
-		$this->ebnfInterpretation = new InterpretationFactory()->createInterpretation(
+		$this->ebnfGrammar = (new GrammarFactory())->createGrammar();
+		$this->ebnfInterpretation = (new InterpretationFactory())->createInterpretation(
 			lexicalSymbols: $lexicalSymbols,
 			syntaxTokenSymbols: $syntaxTokenSymbols,
 			ignoredTokenSymbols: $ignoredTokenSymbols,

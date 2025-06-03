@@ -12,11 +12,11 @@ final class Concatenation implements GrammarProcessing\NodeInterpretation
 	public function interpret(GrammarProcessing\Node $node): Generator
 	{
 		$result = [
-			yield $node->value[1],
+			yield $node->getValue()[1],
 		];
 
-		foreach ($node->value[3]->value as $item) {
-			$result[] = yield $item->value[2];
+		foreach ($node->getValue()[3]->getValue() as $item) {
+			$result[] = yield $item->getValue()[2];
 		}
 
 		if (count($result) === 1) {

@@ -11,4 +11,18 @@ final class NonterminalNode implements Node
 		public readonly mixed $value,
 	) {}
 
+
+
+	public function getName(): string
+	{
+		return $this->name;
+	}
+
+
+
+	public function getValue(): mixed
+	{
+		return $this->value;
+	}
+
 }
