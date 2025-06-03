@@ -44,6 +44,10 @@ jobs:
           - '8.3'
           - '8.4'
 
+        exclude:
+          - deps: lowest
+            os: macos-latest
+
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
