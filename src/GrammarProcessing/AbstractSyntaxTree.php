@@ -24,11 +24,11 @@ final class AbstractSyntaxTree implements Node
 		$nodeInterpretations = $interpretation->nodeInterpretations;
 
 		$generatorStack = [];
-		$currentNodeValue = NULL;
+		$currentNodeValue = null;
 
 		$currentGenerator = $nodeInterpretations[$this->name]->interpret($this->value);
 
-		while (TRUE) {
+		while (true) {
 			if ($currentGenerator->valid()) {
 				$subnode = $currentGenerator->current();
 
@@ -36,8 +36,8 @@ final class AbstractSyntaxTree implements Node
 					$subnode = $subnode->value;
 				}
 
-				if ($subnode === NULL) {
-					$currentGenerator->send(NULL);
+				if ($subnode === null) {
+					$currentGenerator->send(null);
 				} elseif ($subnode instanceof Token) {
 					$currentGenerator->send($subnode->value);
 				} elseif ($subnode instanceof TokenNode) {

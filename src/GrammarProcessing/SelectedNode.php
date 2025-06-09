@@ -5,18 +5,19 @@ namespace Vojtechdobes\GrammarProcessing;
 use LogicException;
 
 
+// phpcs:ignore SlevomatCodingStandard.Classes.DisallowMultiPropertyDefinition.DisallowedMultiPropertyDefinition -- until hooks are properly supported
 final class SelectedNode implements Node
 {
 
-	public string $name {
+	public string $name { // phpcs:disable SlevomatCodingStandard.Classes.DisallowMultiPropertyDefinition.DisallowedMultiPropertyDefinition
 
 		get {
 			throw new LogicException(
-				self::class . " must be parsed manually",
+				self::class . ' must be parsed manually',
 			);
 		}
 
-	}
+	} // phpcs:enable SlevomatCodingStandard.Classes.DisallowMultiPropertyDefinition.DisallowedMultiPropertyDefinition
 
 	public mixed $value {
 

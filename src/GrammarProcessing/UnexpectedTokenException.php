@@ -13,9 +13,9 @@ class UnexpectedTokenException extends RuntimeException
 		public readonly ?Location $location,
 	)
 	{
-		if ($this->location !== NULL) {
+		if ($this->location !== null) {
 			$message = sprintf(
-				"%s (line %s, col %s)",
+				'%s (line %s, col %s)',
 				$message,
 				$this->location->line,
 				$this->location->column,
