@@ -43,11 +43,11 @@ final class Subtract implements Symbol
 				$nonterminals,
 			);
 		} catch (GrammarProcessing\CannotConsumeTokenException) {
-			$pass = TRUE;
+			$pass = true;
 		}
 
-		if (isset($pass) === FALSE) {
-			throw new GrammarProcessing\CannotConsumeTokenException("", $tokenStream->getCurrentPosition(), NULL);
+		if (isset($pass) === false) {
+			throw new GrammarProcessing\CannotConsumeTokenException('', $tokenStream->getCurrentPosition(), null);
 		}
 
 		$tokenStream->advanceTo($tokenStreamCopy);

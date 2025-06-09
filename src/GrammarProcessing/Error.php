@@ -18,7 +18,7 @@ final class Error
 			throw new LogicException("Most specific error can't be unset");
 		}
 
-		if ($this->error === NULL || $this->error->tokenPosition <= $error->tokenPosition) {
+		if ($this->error === null || $this->error->tokenPosition <= $error->tokenPosition) {
 			$this->error = $error;
 		}
 	}

@@ -77,11 +77,11 @@ final class TokenStream
 	 */
 	public function consumeTokenWithType(string $type): Token
 	{
-		if (isset($this->tokens[$this->currentToken]) === FALSE) {
+		if (isset($this->tokens[$this->currentToken]) === false) {
 			throw new CannotConsumeTokenException(
 				"Expected token with type '{$type}', got end of stream",
 				$this->currentToken,
-				NULL,
+				null,
 			);
 		}
 
@@ -107,11 +107,11 @@ final class TokenStream
 	 */
 	public function consumeTokenWithValue(string $value): Token
 	{
-		if (isset($this->tokens[$this->currentToken]) === FALSE) {
+		if (isset($this->tokens[$this->currentToken]) === false) {
 			throw new CannotConsumeTokenException(
 				"Expected token '{$value}', got end of stream",
 				$this->currentToken,
-				NULL,
+				null,
 			);
 		}
 

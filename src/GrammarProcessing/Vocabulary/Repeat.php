@@ -46,8 +46,8 @@ final class Repeat implements Symbol
 			$tokenStream->advanceTo($tokenStreamCopy);
 		}
 
-		while (TRUE) {
-			if ($this->max !== NULL && count($result) >= $this->max) {
+		while (true) {
+			if ($this->max !== null && count($result) >= $this->max) {
 				break;
 			}
 

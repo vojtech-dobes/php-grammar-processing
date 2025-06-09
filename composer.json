@@ -11,6 +11,9 @@
 		}
 	},
 	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": false
+		},
 		"sort-packages": true
 	},
 	"description": "Library for tokenization, abstract syntax tree parsing & interpretation",
@@ -37,7 +40,8 @@
 		"phpstan/phpstan": "^2.1.12",
 		"phpstan/phpstan-strict-rules": "^2.0.4",
 		"spaze/phpstan-disallowed-calls": "^4.5.0",
-		"tracy/tracy": "^2.10.9"
+		"tracy/tracy": "^2.10.9",
+		"vojtech-dobes/php-codestyle": "~0.2.0"
 	},
 	"scripts": {
 		"phpstan": "phpstan analyse",

@@ -72,7 +72,7 @@ final class Grammar implements GrammarProcessing\NodeInterpretation
 			return $symbols;
 		}
 
-		$replace = function (
+		$replace = static function (
 			GrammarProcessing\Vocabulary\Symbol $symbol,
 		) use (
 			$optionalSyntaxTokenSymbols,

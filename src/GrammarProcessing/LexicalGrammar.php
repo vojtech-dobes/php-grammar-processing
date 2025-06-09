@@ -2,8 +2,6 @@
 
 namespace Vojtechdobes\GrammarProcessing;
 
-use LogicException;
-
 
 /**
  * @template-covariant TSymbol of string
@@ -74,7 +72,7 @@ final class LexicalGrammar
 				$matches = array_values(
 					array_filter(
 						$matches,
-						static fn ($match) => $match[1][0] === NULL,
+						static fn ($match) => $match[1][0] === null,
 					),
 				);
 			} else {
@@ -102,10 +100,10 @@ final class LexicalGrammar
 		return new TokenStream(
 			array_map(
 				function (array $match) use ($iMax, $iMin): Token {
-					$type = NULL;
+					$type = null;
 
 					for ($i = $iMin; $i < $iMax; $i++) {
-						if ($match[$i][0] !== NULL) {
+						if ($match[$i][0] !== null) {
 							$type = $this->syntaxTokenSymbols[$i - $iMin];
 						}
 					}
