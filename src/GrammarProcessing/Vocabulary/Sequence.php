@@ -31,12 +31,18 @@ final class Sequence implements Symbol
 		GrammarProcessing\Error $error,
 		GrammarProcessing\TokenStream $tokenStream,
 		array $nonterminals,
-	): GrammarProcessing\ListNode
+	): ?GrammarProcessing\ListNode
 	{
 		$result = [];
 
 		foreach ($this->symbols as $symbol) {
-			$result[] = $symbol->acceptNode($error, $tokenStream, $nonterminals);
+			$node = $symbol->acceptNode($error, $tokenStream, $nonterminals);
+
+			if ($node === null) {
+				return null;
+			}
+
+			$result[] = $node;
 		}
 
 		return new GrammarProcessing\ListNode($result);

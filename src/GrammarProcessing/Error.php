@@ -8,18 +8,18 @@ use LogicException;
 final class Error
 {
 
-	private ?CannotConsumeTokenException $error = null;
+	private int $position = -1;
+	private ?Token $token = null;
+	private string $message = '';
 
 
 
-	public function setError(?CannotConsumeTokenException $error): void
+	public function recordFail(int $position, ?Token $token, string $message): void
 	{
-		if ($error === null) {
-			throw new LogicException("Most specific error can't be unset");
-		}
-
-		if ($this->error === null || $this->error->tokenPosition <= $error->tokenPosition) {
-			$this->error = $error;
+		if ($this->position <= $position) {
+			$this->position = $position;
+			$this->token = $token;
+			$this->message = $message;
 		}
 	}
 
@@ -28,13 +28,17 @@ final class Error
 	/**
 	 * @throws CannotConsumeTokenException
 	 */
-	public function throw(): never
+	public function throw(LocationGetter $locationGetter): never
 	{
-		if ($this->error === null) {
-			throw new LogicException('Most specific error being null indicates error in prior logic');
+		if ($this->position > -1) {
+			throw new CannotConsumeTokenException(
+				$this->message,
+				$this->position,
+				$this->token !== null ? $locationGetter->getLocation($this->token->offset) : null,
+			);
 		}
 
-		throw $this->error;
+		throw new LogicException("This shouldn't happen");
 	}
 
 }

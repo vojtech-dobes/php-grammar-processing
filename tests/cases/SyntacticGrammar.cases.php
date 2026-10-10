@@ -622,7 +622,7 @@ return [
 			),
 		],
 		'xyx',
-		"Unexpected token 'x' (line 1, col 3)",
+		"Expected token with type 'Nondigit', got end of stream",
 	],
 	'Repeat: fail, partial item, token type failure, then other symbol' => [
 		[
@@ -639,7 +639,7 @@ return [
 			]),
 		],
 		'x',
-		"Expected token 'y', got 'x' instead (line 1, col 1)",
+		"Expected token with type 'Nondigit', got end of stream",
 	],
 	'Subtract: pass' => [
 		[

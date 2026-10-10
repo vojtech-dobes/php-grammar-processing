@@ -28,17 +28,22 @@ final class SyntacticGrammar
 	{
 		$error = new Error();
 
-		try {
-			$result = $this->syntacticSymbols[$rootSymbol]->acceptNode(
-				$error,
-				$tokenStream,
-				$this->syntacticSymbols,
-			);
+		$result = $this->syntacticSymbols[$rootSymbol]->acceptNode(
+			$error,
+			$tokenStream,
+			$this->syntacticSymbols,
+		);
 
-			$tokenStream->consumeEndOfStream();
-		} catch (CannotConsumeTokenException $e) {
-			$error->setError($e);
-			$error->throw();
+		if ($result !== null) {
+			if ($tokenStream->consumeEndOfStream($error) === false) {
+				$result = null;
+			}
+		}
+
+		// } catch (CannotConsumeTokenException $e) {
+		// 	$error->setError($e);
+		if ($result === null) {
+			$error->throw($tokenStream->locationGetter);
 		}
 
 		return new AbstractSyntaxTree($rootSymbol, $result);

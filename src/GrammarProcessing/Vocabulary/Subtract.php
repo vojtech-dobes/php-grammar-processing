@@ -30,27 +30,40 @@ final class Subtract implements Symbol
 		GrammarProcessing\Error $error,
 		GrammarProcessing\TokenStream $tokenStream,
 		array $nonterminals,
-	): GrammarProcessing\Node
+	): ?GrammarProcessing\Node
 	{
-		$tokenStreamCopy = clone $tokenStream;
+		$position = $tokenStream->currentPosition;
 
-		$node = $this->baseSymbol->acceptNode($error, $tokenStreamCopy, $nonterminals);
+		$node = $this->baseSymbol->acceptNode($error, $tokenStream, $nonterminals);
 
-		try {
-			$this->subtractedSymbol->acceptNode(
-				new GrammarProcessing\Error(),
-				clone $tokenStream,
-				$nonterminals,
+		if ($node === null) {
+			$tokenStream->currentPosition = $position;
+
+			return null;
+		}
+
+		$afterBasePosition = $tokenStream->currentPosition;
+		$tokenStream->currentPosition = $position;
+
+		$subtractNode = $this->subtractedSymbol->acceptNode(
+			new GrammarProcessing\Error(),
+			$tokenStream,
+			$nonterminals,
+		);
+
+		if ($subtractNode !== null) {
+			$tokenStream->currentPosition = $position;
+
+			$error->recordFail(
+				$position,
+				null,
+				'',
 			);
-		} catch (GrammarProcessing\CannotConsumeTokenException) {
-			$pass = true;
+
+			return null;
 		}
 
-		if (isset($pass) === false) {
-			throw new GrammarProcessing\CannotConsumeTokenException('', $tokenStream->getCurrentPosition(), null);
-		}
-
-		$tokenStream->advanceTo($tokenStreamCopy);
+		$tokenStream->currentPosition = $afterBasePosition;
 
 		return $node;
 	}
