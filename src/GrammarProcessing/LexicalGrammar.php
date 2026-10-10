@@ -76,7 +76,7 @@ final class LexicalGrammar
 					),
 				);
 			} else {
-				$range = range(0, count($this->ignoredTokenSymbols));
+				$range = range(0, count($this->ignoredTokenSymbols) - 1);
 
 				$matches = array_values(
 					array_filter(
