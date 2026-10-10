@@ -92,4 +92,74 @@ return [
 		'ab',
 		"Unexpected token 'b' (line 1, col 2)",
 	],
+	'Order matters: intended setup, more specific first' => [
+		[],
+		[
+			'Digit',
+			'Else',
+		],
+		[
+			'Digit' => new Vojtechdobes\GrammarProcessing\Vocabulary\Regexp('[0-9]'),
+			'Else' => new Vojtechdobes\GrammarProcessing\Vocabulary\Regexp('.'),
+		],
+		'1 a',
+		[
+			['Digit', '1', '1,1'],
+			['Else', ' ', '1,2'],
+			['Else', 'a', '1,3'],
+		],
+	],
+	'Order matters: unintended setup, catch-all first' => [
+		[],
+		[
+			'Else',
+			'Digit',
+		],
+		[
+			'Digit' => new Vojtechdobes\GrammarProcessing\Vocabulary\Regexp('[0-9]'),
+			'Else' => new Vojtechdobes\GrammarProcessing\Vocabulary\Regexp('.'),
+		],
+		'1 a',
+		[
+			['Else', '1', '1,1'],
+			['Else', ' ', '1,2'],
+			['Else', 'a', '1,3'],
+		],
+	],
+	'Ignored symbols: single' => [
+		[
+			'Whitespace',
+		],
+		[
+			'Else',
+		],
+		[
+			'Else' => new Vojtechdobes\GrammarProcessing\Vocabulary\Regexp('.'),
+			'Whitespace' => new Vojtechdobes\GrammarProcessing\Vocabulary\Regexp(' '),
+		],
+		'1 a',
+		[
+			['Else', '1', '1,1'],
+			['Else', 'a', '1,3'],
+		],
+	],
+	'Ignored symbols: multiple' => [
+		[
+			'Whitespace',
+			'Comma',
+		],
+		[
+			'Else',
+		],
+		[
+			'Comma' => new Vojtechdobes\GrammarProcessing\Vocabulary\Regexp(','),
+			'Else' => new Vojtechdobes\GrammarProcessing\Vocabulary\Regexp('.'),
+			'Whitespace' => new Vojtechdobes\GrammarProcessing\Vocabulary\Regexp(' '),
+		],
+		'1, a',
+		[
+			['Else', '1', '1,1'],
+			['Else', 'a', '1,4'],
+		],
+	],
 ];
