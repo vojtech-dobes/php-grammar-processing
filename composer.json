@@ -36,11 +36,11 @@
 		"ext-pcre": "*"
 	},
 	"require-dev": {
-		"nette/tester": "^2.5.4",
+		"nette/tester": "^2.5.7",
 		"phpstan/phpstan": "^2.1.12",
 		"phpstan/phpstan-strict-rules": "^2.0.4",
 		"spaze/phpstan-disallowed-calls": "^4.5.0",
-		"tracy/tracy": "^2.10.9",
+		"tracy/tracy": "^2.11.0",
 		"vojtech-dobes/php-codestyle": "~0.2.0"
 	},
 	"scripts": {
