@@ -25,13 +25,12 @@ final class Literal implements Symbol
 		GrammarProcessing\Error $error,
 		GrammarProcessing\TokenStream $tokenStream,
 		array $nonterminals,
-	): GrammarProcessing\TokenNode
+	): ?GrammarProcessing\TokenNode
 	{
-		try {
-			$token = $tokenStream->consumeTokenWithValue($this->literal);
-		} catch (GrammarProcessing\CannotConsumeTokenException $e) {
-			$error->setError($e);
-			throw $e;
+		$token = $tokenStream->consumeTokenWithValue($this->literal, $error);
+
+		if ($token === null) {
+			return null;
 		}
 
 		return new GrammarProcessing\TokenNode($token);

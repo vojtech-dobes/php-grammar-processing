@@ -2,6 +2,7 @@
 
 namespace Vojtechdobes\GrammarProcessing\Vocabulary;
 
+use LogicException;
 use Vojtechdobes\GrammarProcessing;
 
 
@@ -30,7 +31,12 @@ final class NegativeLookahead implements Symbol
 		array $nonterminals,
 	): GrammarProcessing\EmptyNode
 	{
-		return new GrammarProcessing\EmptyNode('NegativeLookahead');
+		throw new LogicException(
+			sprintf(
+				"%s isn't supported",
+				self::class,
+			),
+		);
 	}
 
 

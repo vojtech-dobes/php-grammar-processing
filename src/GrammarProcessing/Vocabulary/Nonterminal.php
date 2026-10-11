@@ -25,11 +25,25 @@ final class Nonterminal implements Symbol
 		GrammarProcessing\Error $error,
 		GrammarProcessing\TokenStream $tokenStream,
 		array $nonterminals,
-	): GrammarProcessing\TokenNode|GrammarProcessing\NonterminalNode
+	): GrammarProcessing\TokenNode|GrammarProcessing\NonterminalNode|null
 	{
-		return isset($nonterminals[$this->nonterminal])
-			? new GrammarProcessing\NonterminalNode($this->nonterminal, $nonterminals[$this->nonterminal]->acceptNode($error, $tokenStream, $nonterminals))
-			: new GrammarProcessing\TokenNode($tokenStream->consumeTokenWithType($this->nonterminal));
+		if (isset($nonterminals[$this->nonterminal])) {
+			$node = $nonterminals[$this->nonterminal]->acceptNode($error, $tokenStream, $nonterminals);
+
+			if ($node === null) {
+				return null;
+			}
+
+			return new GrammarProcessing\NonterminalNode($this->nonterminal, $node);
+		} else {
+			$token = $tokenStream->consumeTokenWithType($this->nonterminal, $error);
+
+			if ($token === null) {
+				return null;
+			}
+
+			return new GrammarProcessing\TokenNode($token);
+		}
 	}
 
 

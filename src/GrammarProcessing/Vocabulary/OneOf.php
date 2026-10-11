@@ -31,40 +31,35 @@ final class OneOf implements Symbol
 		GrammarProcessing\Error $error,
 		GrammarProcessing\TokenStream $tokenStream,
 		array $nonterminals,
-	): GrammarProcessing\Node
+	): ?GrammarProcessing\Node
 	{
+		$position = $tokenStream->currentPosition;
+
 		$attempts = [];
-		$localError = new GrammarProcessing\Error();
 
 		foreach ($this->symbols as $i => $symbol) {
-			$tokenStreamCopy = clone $tokenStream;
+			$node = $symbol->acceptNode($error, $tokenStream, $nonterminals);
 
-			try {
-				$node = $symbol->acceptNode($error, $tokenStreamCopy, $nonterminals);
-
+			if ($node !== null) {
 				$attempts[] = [
 					'index' => $i,
 					'node' => $node,
-					'tokenStream' => $tokenStreamCopy,
+					'position' => $tokenStream->currentPosition,
 				];
-			} catch (GrammarProcessing\CannotConsumeTokenException $e) {
-				$error->setError($e);
-				$localError->setError($e);
 			}
+
+			$tokenStream->currentPosition = $position;
 		}
 
 		if ($attempts === []) {
-			throw $localError->throw();
+			return null;
 		}
 
-		usort(
-			$attempts,
-			static fn ($a1, $a2) => $a1['tokenStream']->getCurrentPosition() <=> $a2['tokenStream']->getCurrentPosition(),
-		);
+		usort($attempts, static fn ($a1, $a2) => $a1['position'] <=> $a2['position']);
 
 		$result = array_pop($attempts);
 
-		$tokenStream->advanceTo($result['tokenStream']);
+		$tokenStream->currentPosition = $result['position'];
 
 		return new GrammarProcessing\SelectedNode(
 			$result['index'],

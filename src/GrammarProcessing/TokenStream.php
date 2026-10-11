@@ -7,7 +7,7 @@ final class TokenStream
 {
 
 	/** @var int<0, max> */
-	private int $currentToken = 0;
+	public int $currentPosition = 0;
 
 
 
@@ -16,116 +16,100 @@ final class TokenStream
 	 */
 	public function __construct(
 		public readonly array $tokens,
-		private readonly LocationGetter $locationGetter,
+		public readonly LocationGetter $locationGetter,
 	) {}
-
-
-
-	public function advanceTo(self $tokenStream): void
-	{
-		$this->currentToken = $tokenStream->currentToken;
-	}
 
 
 
 	public function isConsumed(): bool
 	{
-		return $this->currentToken === count($this->tokens);
-	}
-
-
-
-	/**
-	 * @return int<0, max>
-	 */
-	public function getCurrentPosition(): int
-	{
-		return $this->currentToken;
+		return $this->currentPosition === count($this->tokens);
 	}
 
 
 
 	public function getCurrentToken(): Token
 	{
-		return $this->tokens[$this->currentToken];
+		return $this->tokens[$this->currentPosition];
 	}
 
 
 
-	/**
-	 * @throws CannotConsumeTokenException
-	 */
-	public function consumeEndOfStream(): void
+	public function consumeEndOfStream(Error $error): bool
 	{
 		if ($this->isConsumed()) {
-			return;
+			return true;
 		}
 
-		$token = $this->tokens[$this->currentToken];
+		$token = $this->tokens[$this->currentPosition];
 
-		throw new CannotConsumeTokenException(
+		$error->recordFail(
+			$this->currentPosition,
+			$token,
 			"Unexpected token '{$token->value}'",
-			$this->currentToken,
-			$this->locationGetter->getLocation($token->offset),
 		);
+
+		return false;
 	}
 
 
 
-	/**
-	 * @throws CannotConsumeTokenException
-	 */
-	public function consumeTokenWithType(string $type): Token
+	public function consumeTokenWithType(string $type, Error $error): ?Token
 	{
-		if (isset($this->tokens[$this->currentToken]) === false) {
-			throw new CannotConsumeTokenException(
-				"Expected token with type '{$type}', got end of stream",
-				$this->currentToken,
+		if (isset($this->tokens[$this->currentPosition]) === false) {
+			$error->recordFail(
+				$this->currentPosition,
 				null,
+				"Expected token with type '{$type}', got end of stream",
 			);
+
+			return null;
 		}
 
-		$token = $this->tokens[$this->currentToken];
+		$token = $this->tokens[$this->currentPosition];
 
 		if ($token->type !== $type) {
-			throw new CannotConsumeTokenException(
+			$error->recordFail(
+				$this->currentPosition,
+				$token,
 				"Expected token with type '{$type}', got '{$token->type}' ({$token->value}) instead",
-				$this->currentToken,
-				$this->locationGetter->getLocation($token->offset),
 			);
+
+			return null;
 		}
 
-		$this->currentToken++;
+		$this->currentPosition++;
 
 		return $token;
 	}
 
 
 
-	/**
-	 * @throws CannotConsumeTokenException
-	 */
-	public function consumeTokenWithValue(string $value): Token
+	public function consumeTokenWithValue(string $value, Error $error): ?Token
 	{
-		if (isset($this->tokens[$this->currentToken]) === false) {
-			throw new CannotConsumeTokenException(
-				"Expected token '{$value}', got end of stream",
-				$this->currentToken,
+		if (isset($this->tokens[$this->currentPosition]) === false) {
+			$error->recordFail(
+				$this->currentPosition,
 				null,
+				"Expected token '{$value}', got end of stream",
 			);
+
+			return null;
 		}
 
-		$token = $this->tokens[$this->currentToken];
+		$token = $this->tokens[$this->currentPosition];
 
 		if ($token->value !== $value) {
-			throw new CannotConsumeTokenException(
+			$error->recordFail(
+				$this->currentPosition,
+				$token,
 				"Expected token '{$value}', got '{$token->value}' instead",
-				$this->currentToken,
-				$this->locationGetter->getLocation($token->offset),
 			);
+
+			return null;
 		}
 
-		$this->currentToken++;
+		$this->currentPosition++;
 
 		return $token;
 	}

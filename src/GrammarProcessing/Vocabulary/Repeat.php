@@ -32,18 +32,24 @@ final class Repeat implements Symbol
 		GrammarProcessing\Error $error,
 		GrammarProcessing\TokenStream $tokenStream,
 		array $nonterminals,
-	): GrammarProcessing\ListNode
+	): ?GrammarProcessing\ListNode
 	{
 		$result = [];
 
 		if ($this->min > 0) {
-			$tokenStreamCopy = clone $tokenStream;
+			$position = $tokenStream->currentPosition;
 
 			for ($i = 0; $i < $this->min; $i++) {
-				$result[] = $this->symbol->acceptNode($error, $tokenStreamCopy, $nonterminals);
-			}
+				$node = $this->symbol->acceptNode($error, $tokenStream, $nonterminals);
 
-			$tokenStream->advanceTo($tokenStreamCopy);
+				if ($node === null) {
+					$tokenStream->currentPosition = $position;
+
+					return null;
+				}
+
+				$result[] = $node;
+			}
 		}
 
 		while (true) {
@@ -55,15 +61,17 @@ final class Repeat implements Symbol
 				break;
 			}
 
-			$tokenStreamCopy = clone $tokenStream;
+			$position = $tokenStream->currentPosition;
 
-			try {
-				$result[] = $this->symbol->acceptNode($error, $tokenStreamCopy, $nonterminals);
-			} catch (GrammarProcessing\CannotConsumeTokenException $e) {
+			$node = $this->symbol->acceptNode($error, $tokenStream, $nonterminals);
+
+			if ($node === null) {
+				$tokenStream->currentPosition = $position;
+
 				break;
 			}
 
-			$tokenStream->advanceTo($tokenStreamCopy);
+			$result[] = $node;
 		}
 
 		return new GrammarProcessing\ListNode($result);
