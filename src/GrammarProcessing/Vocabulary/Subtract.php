@@ -18,9 +18,9 @@ final class Subtract implements Symbol
 	public function getPattern(array $nonterminals): string
 	{
 		return sprintf(
-			'(?:(?=%s)(?!%s)[\S\s])',
-			$this->baseSymbol->getPattern($nonterminals),
+			'(?:(?!%s)(?:%s))',
 			$this->subtractedSymbol->getPattern($nonterminals),
+			$this->baseSymbol->getPattern($nonterminals),
 		);
 	}
 
