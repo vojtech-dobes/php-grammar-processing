@@ -40,8 +40,6 @@ final class SyntacticGrammar
 			}
 		}
 
-		// } catch (CannotConsumeTokenException $e) {
-		// 	$error->setError($e);
 		if ($result === null) {
 			$error->throw($tokenStream->locationGetter);
 		}
