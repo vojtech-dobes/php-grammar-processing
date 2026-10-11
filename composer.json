@@ -44,6 +44,7 @@
 		"vojtech-dobes/php-codestyle": "~0.2.0"
 	},
 	"scripts": {
+		"fmt": "phpcbf",
 		"phpstan": "phpstan analyse",
 		"test": "composer dump-autoload && tester tests -o console-lines --cider --setup=tests/setup.php"
 	}
