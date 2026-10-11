@@ -53,11 +53,12 @@ final class Subtract implements Symbol
 
 		if ($subtractNode !== null) {
 			$tokenStream->currentPosition = $position;
+			$token = $tokenStream->getCurrentToken();
 
 			$error->recordFail(
 				$position,
-				null,
-				'',
+				$token,
+				"Unexpected token '{$token->value}'",
 			);
 
 			return null;

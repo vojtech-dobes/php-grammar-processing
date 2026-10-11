@@ -680,7 +680,7 @@ return [
 			),
 		],
 		'x',
-		'',
+		"Unexpected token 'x' (line 1, col 1)",
 	],
 	'Subtract: fail, end of stream' => [
 		[
