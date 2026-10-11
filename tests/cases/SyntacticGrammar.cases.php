@@ -682,6 +682,24 @@ return [
 		'x',
 		"Unexpected token 'x' (line 1, col 1)",
 	],
+	'Subtract: fail, subtracted, end of stream' => [
+		[
+			'Root' => new Vojtechdobes\GrammarProcessing\Vocabulary\Subtract(
+				new Vojtechdobes\GrammarProcessing\Vocabulary\Repeat(
+					new Vojtechdobes\GrammarProcessing\Vocabulary\Literal('x'),
+					0,
+					null,
+				),
+				new Vojtechdobes\GrammarProcessing\Vocabulary\Repeat(
+					new Vojtechdobes\GrammarProcessing\Vocabulary\Literal('y'),
+					0,
+					null,
+				),
+			),
+		],
+		'',
+		'Unexpected end of stream',
+	],
 	'Subtract: fail, end of stream' => [
 		[
 			'Root' => new Vojtechdobes\GrammarProcessing\Vocabulary\Subtract(
